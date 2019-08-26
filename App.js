@@ -1,7 +1,20 @@
-import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from "react-native";
+import { getOrientationAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
 
 export default function App() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  const goalInputHandler = (enteredText) => {
+    setEnteredGoal(enteredText);
+  };
+
+  const addGoalHandler = () => {
+    // console.log(enteredGoal);
+    setCourseGoals(currentGoals => [...currentGoals, enteredGoal] );
+  };
+
   return (
     <View
       style={styles.screen}
@@ -12,39 +25,30 @@ export default function App() {
         <TextInput
           placeholder="Course 1 Goal"
           style={styles.text1}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
         />
-        <Button title="Add1" />
+        <Button title="Add1" onPress={addGoalHandler} />
       </View>
-      <View
-        style={styles.view2}
-      >
-                <TextInput
-          placeholder="Course 2 Goal"
-          style={styles.text2}
-        />
-        <Button title="Add2" />
+      <ScrollView style>
+        {courseGoals.map( (goal) => (
+        <View key={goal} style={styles.listItem}>
+          <Text > {goal} </Text>
+          </View>
+        ))}
+      </ScrollView>
       </View>
-      <View
-        style={styles.view3}
-      >
-                <TextInput
-          placeholder="Course 3 Goal"
-          style={styles.text3}
-        />
-        <Button title="Add3" />
-      </View>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
-    flexDirection: "row"
+    // flexDirection: "row"
   },
   view1: {
     backgroundColor: "red",
-    width: 100,
+    // width: 100,
     height: 100,
     // flexDirection: 'row',
     justifyContent: "center",
@@ -59,24 +63,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  view3: {
-    backgroundColor: "yellow",
-    flex: 1,
-    // flexDirection: 'row',
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
   text1: { 
-    // width: "80%", 
-    borderColor: "blue", 
-    borderWidth: 1 
-  },
-  text2: { 
     width: "80%", 
     borderColor: "blue", 
-    borderWidth: 1 
+    borderWidth: 1,
+    padding: 10 
   },
-  text3: { 
+  text2: { 
     width: "80%", 
     borderColor: "blue", 
     borderWidth: 1 
@@ -87,4 +80,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  listItem: {
+    padding: 10,
+    margin: 5,
+    backgroundColor: '#ccc',
+    borderColor: 'green',
+    borderWidth: 2
+  }
 });
