@@ -27,12 +27,12 @@ export default function App() {
     <View style={styles.screen}>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Course 1 Goal"
+          placeholder="Type Item to Add to List"
           style={styles.text1}
           onChangeText={goalInputHandler}
           value={enteredGoal}
         />
-        <Button title="Add1" onPress={addGoalHandler} />
+        <Button title="Add" onPress={addGoalHandler} />
       </View>
       <FlatList 
       keyExtractor={(item, index) => item.id}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     // flexDirection: "row"
   },
   inputContainer: {
-    backgroundColor: "red",
+    // backgroundColor: "red",
     // width: 100,
     height: 100,
     // flexDirection: 'row',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text1: {
-    width: "80%",
+    // width: "80%",
     borderColor: "blue",
     borderWidth: 1,
     padding: 10
