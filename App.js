@@ -9,6 +9,8 @@ import {
   FlatList
 } from "react-native";
 import { getOrientationAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
@@ -20,28 +22,21 @@ export default function App() {
 
   const addGoalHandler = () => {
     // console.log(enteredGoal);
-    setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: enteredGoal} ]);
+    setCourseGoals(currentGoals => [
+      ...currentGoals,
+      { idYo: Math.random().toString(), value: enteredGoal }
+    ]);
   };
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Type Item to Add to List"
-          style={styles.text1}
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
-        <Button title="Add" onPress={addGoalHandler} />
-      </View>
-      <FlatList 
-      keyExtractor={(item, index) => item.id}
-      data={courseGoals}
-      renderItem={itemData =>
-        (
-          <View style={styles.listItem}>
-            <Text> {itemData.item.value} </Text>
-          </View>
+      <GoalInput enteredGoal={enteredGoal} goalInputHandler={goalInputHandler} addGoalHandler={addGoalHandler} />
+      <FlatList
+        keyExtractor={(item, index) => item.idYo}
+        data={courseGoals} //MC: courseGoals = Array of objects(key: value pair)
+        // MC: itemData = object with key = each object in array of objects courseGoals
+        renderItem={itemData => (
+          <GoalItem title={itemData.item.value} />
         )}
       />
     </View>
